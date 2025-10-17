@@ -148,7 +148,17 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDto> findForPersonDto(int personId) {
-        return List.of();
+        return addressDAO.findByPersonId(personId).stream()
+                .map(address -> new AddressDto(
+                        address.getCountry(),
+                        address.getCity(),
+                        address.getZip(),
+                        address.getStreet(),
+                        address.getHouseNumber(),
+                        address.getStatusCode(),
+                        address.getAddressStructure()
+                ))
+                .toList();
     }
 
     @Transactional

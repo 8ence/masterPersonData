@@ -29,9 +29,9 @@ public class AddressRestController {
         return addressService.findByIdDto(id);
     }
 
-    @GetMapping("/find/{personId}")
-    public List<Address> getAddresses(@PathVariable int personId) {
-        return addressService.findForPerson(personId);
+    @GetMapping("/findByPersonId/{id}")
+    public List<AddressDto> getAddressByPersonId(@PathVariable int id) {
+        return addressService.findForPersonDto(id);
     }
 
     @GetMapping("/findById/{addressId}")
