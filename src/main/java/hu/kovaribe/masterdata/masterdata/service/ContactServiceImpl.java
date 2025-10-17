@@ -16,6 +16,7 @@ public class ContactServiceImpl implements ContactService {
 
     private final ContactDAO contactDAO;
     private final AddressDAO addressDAO;
+    public ContactDto contactDto;
 
     public ContactServiceImpl(ContactDAO contactDAO, AddressDAO addressDAO) {
         this.contactDAO = contactDAO;
@@ -24,18 +25,48 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> findAll() {
-        return contactDAO.findAll();
+    public List<ContactDto> findAllDtos() {
+        return contactDAO.findAll().stream()
+                .map(contact -> new ContactDto(
+                        contact.getId(),
+                        contact.getContactType(),
+                        contact.getContactValue(),
+                        contact.getStatusCode()
+                ))
+                .toList();
     }
 
     @Override
-    public Contact findById(int id) {
-        return contactDAO.findById(id);
+    public ContactDto findByIdDto(int id) {
+        Contact contact = contactDAO.findById(id);
+        return new ContactDto(
+                contact.getId(),
+                contact.getContactType(),
+                contact.getContactValue(),
+                contact.getStatusCode()
+        );
+    }
+
+    @Override
+    public List<ContactDto> findForAddressDto(int addressId) {
+        return contactDAO.findForAddressId(addressId).stream()
+                .map(contact -> new ContactDto(
+                        contact.getId(),
+                        contact.getContactType(),
+                        contact.getContactValue(),
+                        contact.getStatusCode()
+                ))
+                .toList();
     }
 
     @Override
     public List<Contact> findForAddress(int addressId) {
         return contactDAO.findForAddressId(addressId);
+    }
+
+    @Override
+    public Contact findById(int contactId) {
+        return contactDAO.findById(contactId);
     }
 
     @Transactional
@@ -79,11 +110,6 @@ public class ContactServiceImpl implements ContactService {
         if (dto.contactValue() != null) existing.setContactValue(dto.contactValue());
 
         return contactDAO.save(existing);
-    }
-
-    @Override
-    public List<ContactDto> findAllDtos() {
-        return contactDAO.findAllDtos();
     }
 
     @Override

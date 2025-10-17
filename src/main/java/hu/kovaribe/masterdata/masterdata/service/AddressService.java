@@ -23,4 +23,10 @@ public interface AddressService {
     @Transactional
     void deleteById(int id);
 
+    List<AddressDto> findAllDtos();
+
+    AddressDto findByIdDto(int id);
+
+    List<AddressDto> findForPersonDto(int personId);
+
 }

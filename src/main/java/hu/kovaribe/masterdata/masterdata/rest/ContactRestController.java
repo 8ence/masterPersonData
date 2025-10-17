@@ -23,12 +23,14 @@ public class ContactRestController {
         return contactService.findAllDtos();
     }
 
-    @GetMapping("/find/allContacts")
-    public List<Contact> findAllContact() {return contactService.findAll();}
+    @GetMapping("findById/{id}")
+    public ContactDto getContactById(@PathVariable int id) {
+        return contactService.findByIdDto(id);
+    }
 
-    @GetMapping("/findByAddress/{addressId}")
-    public List<Contact> findByAddress(@PathVariable int addressId) {
-        return contactService.findForAddress(addressId);
+    @GetMapping("/findForAddress/{addressId}")
+    public List<ContactDto> getContactByAddressId(@PathVariable int addressId) {
+        return contactService.findForAddressDto(addressId);
     }
 
     @PostMapping("/create/{addressId}")

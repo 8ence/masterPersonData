@@ -19,9 +19,9 @@ public class AddressRestController {
 
     }
 
-    @GetMapping("/findAll")
-    public List<Address> getAllAddress() {
-        return addressService.findAll();
+    @GetMapping("/find/all")
+    public List<AddressDto> getAllAddress() {
+        return addressService.findAllDtos();
     }
 
     @GetMapping("/find/{personId}")

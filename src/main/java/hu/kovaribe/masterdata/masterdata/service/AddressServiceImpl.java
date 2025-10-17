@@ -17,6 +17,7 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressDAO addressDAO;
     private final PersonDAO personDAO;
+    public AddressDto addressDto;
 
     public AddressServiceImpl(AddressDAO addressDAO, PersonDAO personDAO, EntityManager entityManager) {
         this.addressDAO = addressDAO;
@@ -73,12 +74,12 @@ public class AddressServiceImpl implements AddressService {
 
         Address newAddress = new Address();
         newAddress.setPerson(person);
-        if (dto.country() != null) newAddress.setCountry(dto.country());
-        if (dto.city() != null) newAddress.setCity(dto.city());
-        if (dto.zip() != null) newAddress.setZip(dto.zip());
-        if (dto.street() != null) newAddress.setStreet(dto.street());
-        if (dto.houseNumber() != null) newAddress.setHouseNumber(dto.houseNumber());
-        if (dto.statusCode() != null) newAddress.setStatusCode(dto.statusCode());
+        newAddress.setCountry(dto.country());
+        newAddress.setCity(dto.city());
+        newAddress.setZip(dto.zip());
+        newAddress.setStreet(dto.street());
+        newAddress.setHouseNumber(dto.houseNumber());
+        newAddress.setStatusCode(dto.statusCode());
         newAddress.setAddressStructure(dto.addressStructure());
 
         System.out.println("### ENTITY structure after set: " + newAddress.getAddressStructure());
@@ -99,14 +100,13 @@ public class AddressServiceImpl implements AddressService {
         }
         address.setPerson(person);
 
-
-        if (dto.country() != null) address.setCountry(dto.country());
-        if (dto.city() != null) address.setCity(dto.city());
-        if (dto.zip() != null) address.setZip(dto.zip());
-        if (dto.street() != null) address.setStreet(dto.street());
-        if (dto.houseNumber() != null) address.setHouseNumber(dto.houseNumber());
-        if (dto.statusCode() != null) address.setStatusCode(dto.statusCode());
-        if (dto.addressStructure() != null) address.setAddressStructure(dto.addressStructure());
+        address.setCountry(dto.country());
+        address.setCity(dto.city());
+        address.setZip(dto.zip());
+        address.setStreet(dto.street());
+        address.setHouseNumber(dto.houseNumber());
+        address.setStatusCode(dto.statusCode());
+        address.setAddressStructure(dto.addressStructure());
 
         return upsertWithUniqueness(personId, address);
     }
@@ -115,6 +115,31 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void deleteById(int id) {
         addressDAO.deleteById(id);
+    }
+
+    @Override
+    public List<AddressDto> findAllDtos() {
+        return addressDAO.findAll().stream()
+                .map(address -> new AddressDto(
+                        address.getCountry(),
+                        address.getCity(),
+                        address.getZip(),
+                        address.getStreet(),
+                        address.getHouseNumber(),
+                        address.getStatusCode(),
+                        address.getAddressStructure()
+                ))
+                .toList();
+    }
+
+    @Override
+    public AddressDto findByIdDto(int id) {
+        return null;
+    }
+
+    @Override
+    public List<AddressDto> findForPersonDto(int personId) {
+        return List.of();
     }
 
     @Transactional
