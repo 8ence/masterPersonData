@@ -134,7 +134,16 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDto findByIdDto(int id) {
-        return null;
+        Address address = addressDAO.findById(id);
+        return new AddressDto(
+                address.getCountry(),
+                address.getCity(),
+                address.getZip(),
+                address.getStreet(),
+                address.getHouseNumber(),
+                address.getStatusCode(),
+                address.getAddressStructure()
+        );
     }
 
     @Override

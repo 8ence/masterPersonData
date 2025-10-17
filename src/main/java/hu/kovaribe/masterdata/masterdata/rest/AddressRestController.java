@@ -24,6 +24,11 @@ public class AddressRestController {
         return addressService.findAllDtos();
     }
 
+    @GetMapping("/findByAddressId/{id}")
+    public AddressDto getAddressById(@PathVariable int id) {
+        return addressService.findByIdDto(id);
+    }
+
     @GetMapping("/find/{personId}")
     public List<Address> getAddresses(@PathVariable int personId) {
         return addressService.findForPerson(personId);
