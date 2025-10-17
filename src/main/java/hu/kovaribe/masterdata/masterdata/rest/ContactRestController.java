@@ -18,6 +18,11 @@ public class ContactRestController {
         this.contactService = contactService;
     }
 
+    @GetMapping("/find/all")
+    public List<ContactDto> getAllContacts() {
+        return contactService.findAllDtos();
+    }
+
     @GetMapping("/find/allContacts")
     public List<Contact> findAllContact() {return contactService.findAll();}
 

@@ -19,6 +19,8 @@ public interface ContactService {
 
     Contact updateForAddress(int addressId, int contactId, ContactDto dto);
 
+    List<ContactDto> findAllDtos();
+
     @Transactional
     void deleteById(int id);
 }

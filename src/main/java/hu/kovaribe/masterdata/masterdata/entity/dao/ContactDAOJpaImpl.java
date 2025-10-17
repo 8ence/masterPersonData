@@ -1,5 +1,6 @@
 package hu.kovaribe.masterdata.masterdata.entity.dao;
 
+import hu.kovaribe.masterdata.masterdata.dto.ContactDto;
 import hu.kovaribe.masterdata.masterdata.entity.Contact;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -44,6 +45,15 @@ public class ContactDAOJpaImpl implements ContactDAO {
 
         Contact dbContact = entityManager.merge(contact);
         return dbContact;
+    }
+
+    @Override
+    public List<ContactDto> findAllDtos() {
+        return entityManager.createQuery(
+                "select new hu.kovaribe.masterdata.masterdata.dto.ContactDto(" +
+                        " c.id, c.contactType, c.contactValue, c.statusCode) from Contact c",
+                ContactDto.class
+        ).getResultList();
     }
 
     @Override

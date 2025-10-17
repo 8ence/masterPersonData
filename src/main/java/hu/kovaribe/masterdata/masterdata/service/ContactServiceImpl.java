@@ -82,6 +82,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    public List<ContactDto> findAllDtos() {
+        return contactDAO.findAllDtos();
+    }
+
+    @Override
     public void deleteById(int id) {
         contactDAO.deleteById(id);
     }

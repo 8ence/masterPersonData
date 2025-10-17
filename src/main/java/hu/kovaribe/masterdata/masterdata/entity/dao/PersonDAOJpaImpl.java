@@ -43,4 +43,5 @@ public class PersonDAOJpaImpl implements PersonDAO {
         Person person = entityManager.find(Person.class, id);
         entityManager.remove(person);
     }
+
 }
